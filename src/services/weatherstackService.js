@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { getCurrentWeather: getCurrentWeatherBackup, getForecastWeather: getForecastWeatherBackup } = require('./weatherapiService');
 const WEATHERSTACK_API_URL = 'http://api.weatherstack.com';
 const ACCESS_KEY = process.env.WEATHERSTACK_API_KEY;
 
@@ -17,8 +18,8 @@ async function getCurrentWeather(location) {
         }
         return response.data;
     } catch (error) {
-        console.error('Error fetching weather data:', error.message);
-        throw new Error('Unable to fetch weather data at this time.');
+        console.error('Weatherstack failed, switching to WeatherAPI:', error.message);
+        return await getCurrentWeatherBackup(location);
     }
 }
 
@@ -29,7 +30,7 @@ async function getForecastWeather(location) {
                 access_key: ACCESS_KEY,
                 query: location,
                 units: 'f',
-                forecast_days: 7,
+                forecast_days: 5,
                 hourly: 1
             }
         });
@@ -39,8 +40,8 @@ async function getForecastWeather(location) {
         }
         return response.data;
     } catch (error) {
-        console.error('Error fetching forecast data:', error.message);
-        throw new Error('Unable to fetch forecast data at this time.');
+        console.error('Weatherstack failed, switching to WeatherAPI:', error.message);
+        return await getForecastWeatherBackup(location);
     }
 }
 
