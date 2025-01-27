@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { getCurrentWeather: getCurrentWeatherBackup, getForecastWeather: getForecastWeatherBackup } = require('./weatherapiService');
-const WEATHERSTACK_API_URL = 'http://api.weatherstack.com';
+const WEATHERSTACK_API_URL = 'https://api.weatherstack.com';
 const ACCESS_KEY = process.env.WEATHERSTACK_API_KEY;
 
 async function getCurrentWeather(location) {
@@ -31,7 +31,8 @@ async function getForecastWeather(location) {
                 query: location,
                 units: 'f',
                 forecast_days: 5,
-                hourly: 1
+                hourly: 1,
+                interval: 1
             }
         });
 
