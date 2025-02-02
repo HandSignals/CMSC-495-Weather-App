@@ -30,13 +30,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updateWeatherDisplay(data) {
         document.getElementById("current-location").textContent = data.location || "Unknown";
-        document.getElementById("temperature").textContent = `${data.current.temperature}°C`;
+        document.getElementById("temperature").textContent = `${data.current.temperature}°F`;
         document.getElementById("description").textContent = data.current.weather_descriptions[0];
-        document.getElementById("feels-like").textContent = `Feels Like: ${data.current.feelslike}°C`;
-        document.getElementById("wind").textContent = `Wind: ${data.current.wind_speed} km/h`;
+        document.getElementById("feels-like").textContent = `Feels Like: ${data.current.feelslike}°F`;
+        document.getElementById("wind").textContent = `Wind: ${data.current.wind_speed} mp/h`;
         document.getElementById("humidity").textContent = `Humidity: ${data.current.humidity}%`;
-        document.getElementById("precip").textContent = `Precipitation: ${data.current.precip} mm`;
+        document.getElementById("precip").textContent = `Precipitation: ${data.current.precip} in```;
     }
 });
-
-

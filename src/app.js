@@ -19,4 +19,3 @@ app.listen(PORT, () => {
 
 console.log('Weatherstack API Key:', process.env.WEATHERSTACK_API_KEY);
 console.log('WeatherAPI Key:', process.env.WEATHERAPI_KEY);
-
