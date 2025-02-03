@@ -33,7 +33,7 @@ async function getCurrentWeather(location) {
             condition: response.data.current.condition.text,
             windSpeed: response.data.current.wind_mph,
             humidity: response.data.current.humidity,
-            precipitation: response.data.current.precip_mm !== undefined ? `${response.data.current.precip_mm} mm` : "0 mm",
+            precipitation: response.data.current.precip_mm !== undefined ? `${response.data.current.precip_in} ` : "0 in",
             icon: response.data.current.condition.icon,
         };
     } catch (error) {

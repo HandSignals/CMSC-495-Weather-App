@@ -42,15 +42,26 @@ main {
     border-radius: 10px;
 }
 
-/* Hourly Forecast - Keep Horizontal */
+/* Hourly Forecast - Keep Horizontal & Centered */
 .hourly-container {
     display: flex;
+    justify-content: center; / Centers the items /
     overflow-x: auto;
     gap: 15px;
     padding: 10px;
     white-space: nowrap;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
+    width: 100%; / Ensures it spans the available space /
+}
+
+.hourly-container::-webkit-scrollbar {
+    display: none; / Hides scrollbar for cleaner look (optional) /
+}
+
+/* Centering Forecast Items */
+.hourly-container > {
+    flex: 0 0 auto; /* Prevents items from stretching */
 }
 
 /* 3-Day and 10-Day Forecasts - Vertical Layout */
