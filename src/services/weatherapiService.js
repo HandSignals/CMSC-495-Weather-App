@@ -58,7 +58,8 @@ async function getForecastWeather(location) {
         // Debugging: Log the full API response
         console.log("WeatherAPI Response (Forecast):", JSON.stringify(response.data, null, 2));
 
-        if (!response.data || !response.data.forecast || !response.data.forecast.forecastday) {
+        if (!response.data || !response.data.forecast || !Array.isArray(response.data.forecast.forecastday)) {
+            console.error("Invalid response structure from WeatherAPI:", response.data);
             throw new Error("Invalid API response structure. Missing 'forecast' data.");
         }
 

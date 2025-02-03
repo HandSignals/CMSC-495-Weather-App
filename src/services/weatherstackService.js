@@ -30,7 +30,7 @@ async function getForecastWeather(location) {
                 access_key: ACCESS_KEY,
                 query: location,
                 units: 'f',
-                forecast_days: 5,
+                forecast_days: 10,
                 hourly: 1,
                 interval: 1
             }

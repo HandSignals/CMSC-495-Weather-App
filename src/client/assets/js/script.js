@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function fetchWeather(location) {
         try {
-            const response = await fetch(`http://localhost:3000/api/weather/current?location=${encodeURIComponent(location)}`);
+            const response = await fetch(`/api/weather/current?location=${encodeURIComponent(location)}`);
             const data = await response.json();
 
             if (response.ok) {
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function fetchHourlyForecast(location, hoursToShow) {
         try {
-            const response = await fetch(`http://localhost:3000/api/weather/hourly?location=${encodeURIComponent(location)}`);
+            const response = await fetch(`/api/weather/hourly?location=${encodeURIComponent(location)}`);
             const data = await response.json();
 
             if (response.ok) {
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
     async function fetchWeeklyForecast(location, daysToShow) {
         try {
             console.log(`Fetching weekly forecast for location: ${location}`);
-            const response = await fetch(`http://localhost:3000/api/weather/forecast?location=${encodeURIComponent(location)}`);
+            const response = await fetch(`/api/weather/forecast?location=${encodeURIComponent(location)}`);
             const data = await response.json();
 
             if (!response.ok) {
@@ -89,7 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             console.log("Weekly forecast data received:", data);
             updateWeeklyForecast(data.forecast, daysToShow);
-            updateFullWeeklyForecast(data.forecast, 10); // Fetch 10-day forecast for weekly page
         } catch (error) {
             console.error("Network/Parsing Error:", error);
             alert("Network error while fetching weekly forecast.");
