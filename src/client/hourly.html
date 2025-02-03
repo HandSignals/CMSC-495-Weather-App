@@ -40,7 +40,7 @@
         }
 
         try {
-            const response = await fetch(`http://localhost:3000/api/weather/hourly?location=${encodeURIComponent(location)}`);
+            const response = await fetch(`/api/weather/hourly?location=${encodeURIComponent(location)}`);
             const data = await response.json();
 
             document.getElementById("location-title").innerText = `12-Hour Forecast for ${data.location}, ${data.country}`;
