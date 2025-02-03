@@ -1,0 +1,102 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    color: #333;
+    transition: background 0.5s ease-in-out;
+}
+
+
+
+/* Header */
+header {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+header nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #007BFF;
+}
+
+/* Main Content */
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+#search {
+    margin: 20px 0;
+}
+
+#weather-display {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Hourly Forecast */
+#hourly-forecast {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.hourly-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding: 10px;
+    white-space: nowrap;
+}
+
+.hourly-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    min-width: 100px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.hourly-item img {
+    width: 40px;
+    height: 40px;
+}
+
+.hourly-time {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.hourly-temp {
+    font-size: 14px;
+    font-weight: bold;
+    color: #007BFF;
+}
+
+.hourly-details {
+    font-size: 12px;
+    color: #555;
+}
+
+/* Dynamic Backgrounds */
+.sunny-bg { background-image: url('../images/backgrounds/sunny-bg.jpg'); }
+.cloudy-bg { background-image: url('../images/backgrounds/cloudy-bg.jpg'); }
+.rainy-bg { background-image: url('../images/backgrounds/rainy-bg.jpg'); }
+.snowy-bg { background-image: url('../images/backgrounds/snowy-bg.jpg'); }
+.partly-sunny-bg { background-image: url('../images/backgrounds/partly-sunny-bg.jpg'); }
+.partly-cloudy-bg { background-image: url('../images/backgrounds/partly-cloudy-bg.jpg'); }
+.rainy-snowy-bg { background-image: url('../images/backgrounds/rainy-snowy-bg.jpg'); }
+.windy-bg { background-image: url('../images/backgrounds/windy-bg.jpg'); }

@@ -1,5 +1,5 @@
 const axios = require('axios');
-const WEATHERAPI_BASE_URL = 'http://api.weatherapi.com/v1';
+const WEATHERAPI_BASE_URL = 'https://api.weatherapi.com/v1';
 const WEATHERAPI_KEY = process.env.WEATHERAPI_KEY;
 
 async function getCurrentWeather(location) {
