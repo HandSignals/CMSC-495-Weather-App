@@ -1,10 +1,10 @@
 const { getCurrentWeather, getForecastWeather } = require('../services/weatherstackService'); // Ensure correct service file
 
-
 // Fetch and return current weather data
 async function fetchCurrentWeather(req, res) {
     try {
         const location = req.query.location;
+        const userTimezone = req.query.timezone || "UTC";
 
         if (!location) {
             return res.status(400).json({ error: 'Location query parameter is required.' });

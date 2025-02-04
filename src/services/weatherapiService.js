@@ -17,6 +17,7 @@ async function getCurrentWeather(location) {
             params: {
                 key: WEATHERAPI_KEY,
                 q: location,
+                timestamp: new Date().getTime()
             },
         });
 

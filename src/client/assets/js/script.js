@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function fetchWeather(location) {
         try {
+            const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             const response = await fetch(`/api/weather/current?location=${encodeURIComponent(location)}`);
             const data = await response.json();
 
@@ -56,6 +57,8 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             const response = await fetch(`/api/weather/hourly?location=${encodeURIComponent(location)}`);
             const data = await response.json();
+
+            console.log("✅ Hourly Forecast Response:", data);
 
             if (response.ok) {
                 updateHourlyForecast(data.hourly, hoursToShow);

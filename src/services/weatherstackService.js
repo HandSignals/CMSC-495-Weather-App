@@ -29,13 +29,13 @@ async function getCurrentWeather(location) {
         return {
             location: response.data.location.name,
             country: response.data.location.country,
-            temperature: response.data.current.temperature,
-            feelslike: response.data.current.feelslike,
-            condition: response.data.current.weather_descriptions[0] || "Unknown",
-            windSpeed: response.data.current.wind_speed,
-            humidity: response.data.current.humidity,
-            precipitation: response.data.current.precip !== undefined ? `${response.data.current.precip} in` : "0 in",
-            icon: response.data.current.weather_icons[0] || ""
+            temperature: response.data.current.temperature ?? "N/A",
+            feelslike: response.data.current.feelslike ?? "N/A",
+            condition: response.data.current.weather_descriptions?.[0] || "Unknown",
+            windSpeed: response.data.current.wind_speed?? "N/A",
+            humidity: response.data.current.humidity ?? "N/A",
+            precipitation: response.data.current.precip !== undefined ? `${response.data.current.precip}` : "0 in",
+            icon: response.data.current.weather_icons?.[0] || ""
         };
 
     } catch (error) {
@@ -81,7 +81,7 @@ async function getForecastWeather(location) {
                 condition: hour.weather_descriptions[0] || "Unknown",
                 windSpeed: hour.wind_speed,
                 humidity: hour.humidity,
-                precipitation: hour.precip !== undefined ? `${hour.precip} in` : "0 in",
+                precipitation: hour.precip !== undefined ? `${hour.precip}` : "0 in",
                 icon: hour.weather_icons[0] || ""
             })) : []
         }));
