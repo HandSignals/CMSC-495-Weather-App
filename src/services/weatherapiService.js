@@ -19,7 +19,7 @@ async function getCurrentWeather(location) {
             },
         });
 
-        console.log("🔹 Full WeatherAPI Response (Current):", JSON.stringify(response.data, null, 2));
+        // console.log("Full WeatherAPI Response (Current):", JSON.stringify(response.data, null, 2));
 
         if (!response.data || !response.data.current) {
             throw new Error("Invalid API response structure. Missing 'current' data.");
@@ -49,14 +49,14 @@ async function getForecastWeather(location) {
             params: {
                 key: WEATHERAPI_KEY,
                 q: location,
-                days: 10, // Fetching a 10-day forecast
+                days: 7, // Fetching a 7-day forecast
                 aqi: "no",
                 alerts: "no"
             },
         });
 
         // Debugging: Log the full API response
-        console.log("WeatherAPI Response (Forecast):", JSON.stringify(response.data, null, 2));
+        // console.log("WeatherAPI Response (Forecast):", JSON.stringify(response.data, null, 2));
 
         if (!response.data || !response.data.forecast || !Array.isArray(response.data.forecast.forecastday)) {
             console.error("Invalid response structure from WeatherAPI:", response.data);
@@ -69,6 +69,10 @@ async function getForecastWeather(location) {
             minTemp: day.day.mintemp_f,
             condition: day.day.condition.text,
             icon: day.day.condition.icon,
+            feelsLike: day.day.avgtemp_f || "N/A",
+            wind: day.day.maxwind_mph ? `${day.day.maxwind_mph} mph` : "N/A",
+            humidity: day.day.avghumidity ? `${day.day.avghumidity}%` : "N/A",
+            precipitation: day.day.totalprecip_in ? `${day.day.totalprecip_in} in` : "N/A",
             hourly: day.hour ? day.hour.map(hour => ({
                 time: hour.time,
                 temp: hour.temp_f,
@@ -93,5 +97,3 @@ async function getForecastWeather(location) {
 
 // Export the functions
 module.exports = { getCurrentWeather, getForecastWeather };
-
-

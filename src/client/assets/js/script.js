@@ -88,6 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             console.log("Weekly forecast data received:", data);
+
             updateWeeklyForecast(data.forecast, daysToShow);
         } catch (error) {
             console.error("Network/Parsing Error:", error);
@@ -201,6 +202,3 @@ document.addEventListener("DOMContentLoaded", function () {
         fetchWeeklyForecast(storedLocation, 3);
     }
 });
-
-
-

@@ -1,4 +1,4 @@
-const { getCurrentWeather, getForecastWeather } = require('../services/weatherapiService'); // Ensure correct service file
+const { getCurrentWeather, getForecastWeather } = require('../services/weatherstackService'); // Ensure correct service file
 
 async function fetchCurrentWeather(req, res) {
     try {
@@ -26,7 +26,7 @@ async function fetchCurrentWeather(req, res) {
             temperature: weatherData.temperature ?? "N/A",
             feelsLike: weatherData.feelsLike ?? "N/A",
             condition: weatherData.condition || "Unknown",
-            icon: weatherData.icon || "",
+            icon: weatherData.icon ? `https:${weatherData.icon}` : "",
             wind: weatherData.windSpeed ? `${weatherData.windSpeed} mph` : "N/A",
             humidity: weatherData.humidity ? `${weatherData.humidity}%` : "N/A",
             precipitation: weatherData.precipitation ? `${weatherData.precipitation} in` : "N/A"
@@ -53,6 +53,26 @@ async function fetchForecastWeather(req, res) {
         console.log(`Fetching forecast for: ${location}`);
 
         const forecastData = await getForecastWeather(location);
+
+        const formattedForecast = {
+            location: forecastData.location || "Unknown",
+            country: forecastData.country || "Unknown",
+            forecast: forecastData.forecast.map(day => ({
+                day: day.date,
+                maxTemp: day.maxTemp ?? "N/A",
+                minTemp: day.minTemp ?? "N/A",
+                condition: day.condition || "Unknown",
+                icon: day.icon || "",
+                feelsLike: day.feelsLike ?? "N/A",
+                wind: day.wind ?? "N/A",
+                humidity: day.humidity ?? "N/A",
+                precipitation: day.precipitation ?? "N/A"
+            }))
+        }
+
+        if (formattedForecast.location === "Unknown" || formattedForecast.country === "Unknown") {
+            console.error("Location data missing in API response:", forecastData);
+        }
 
         // Log the full API response to debug
         console.log("Raw API Response:", forecastData);

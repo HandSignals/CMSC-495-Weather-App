@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10-Day Forecast</title>
+    <title>7-Day Forecast</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
 <header>
-    <h1>10-Day Forecast</h1>
+    <h1>7-Day Forecast</h1>
     <nav>
         <a href="index.html">Home</a>
     </nav>
@@ -43,7 +43,7 @@
             const response = await fetch(`/api/weather/forecast?location=${encodeURIComponent(location)}`);
             const data = await response.json();
 
-            document.getElementById("location-title").innerText = `10-Day Forecast for ${data.location}, ${data.country}`;
+            document.getElementById("location-title").innerText = `7-Day Forecast for ${data.location}, ${data.country}`;
 
             const weeklyContainer = document.querySelector(".weekly-container");
             weeklyContainer.innerHTML = "";

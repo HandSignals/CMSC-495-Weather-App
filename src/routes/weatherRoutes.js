@@ -4,7 +4,6 @@ const { fetchCurrentWeather, fetchForecastWeather, fetchHourlyWeather } = requir
 
 router.get('/current', fetchCurrentWeather);
 router.get('/forecast', fetchForecastWeather);
-router.get('/hourly', fetchHourlyWeather); // New route for hourly data
+router.get('/hourly', fetchHourlyWeather);
 
 module.exports = router;
-
