@@ -3,12 +3,13 @@ const { getCurrentWeather: getCurrentWeatherBackup, getForecastWeather: getForec
 const WEATHERSTACK_API_URL = 'https://api.weatherstack.com';
 const ACCESS_KEY = process.env.WEATHERSTACK_API_KEY;
 
+// Ensure API key is set; exit process if missing
 if (!ACCESS_KEY) {
     console.error("WEATHERSTACK_API_KEY is missing! Check your .env file.");
     process.exit(1);
 }
 
-// Fetch current weather
+// Fetch current weather data
 async function getCurrentWeather(location) {
     try {
         const response = await axios.get(`${WEATHERSTACK_API_URL}/current`, {
@@ -19,10 +20,12 @@ async function getCurrentWeather(location) {
             }
         });
 
+        // Check for API errors
         if (response.data.error) {
             throw new Error(response.data.error.info);
         }
 
+        // Format and return relevant weather data
         return {
             location: response.data.location.name,
             country: response.data.location.country,
@@ -36,12 +39,13 @@ async function getCurrentWeather(location) {
         };
 
     } catch (error) {
+        // If WeatherStack fails, switch to WeatherAPI
         console.error('Weatherstack failed, switching to WeatherAPI:', error.message);
         return await getCurrentWeatherBackup(location);
     }
 }
 
-// Fetch 10-Day Forecast Weather
+// Fetch 7-Day forecast weather data
 async function getForecastWeather(location) {
     try {
         const response = await axios.get(`${WEATHERSTACK_API_URL}/forecast`, {
@@ -49,14 +53,18 @@ async function getForecastWeather(location) {
                 access_key: ACCESS_KEY,
                 query: location,
                 units: 'f',
+                timezone: 'local',
                 forecast_days: 7,
+                timestamp: new Date().getTime()
             }
         });
 
+        // Check for API errors
         if (response.data.error) {
             throw new Error(response.data.error.info);
         }
 
+        // Format forecast data
         const forecast = Object.values(response.data.forecast).map(day => ({
             date: day.date,
             maxTemp: day.maxTemp,
@@ -85,9 +93,11 @@ async function getForecastWeather(location) {
         };
 
     } catch (error) {
+        // If WeatherStack fails, switch to WeatherAPI
         console.error('Weatherstack failed, switching to WeatherAPI:', error.message);
         return await getForecastWeatherBackup(location);
     }
 }
 
+// Export the weather functions for use elsewhere
 module.exports = { getCurrentWeather, getForecastWeather };

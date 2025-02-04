@@ -1,5 +1,7 @@
 const { getCurrentWeather, getForecastWeather } = require('../services/weatherstackService'); // Ensure correct service file
 
+
+// Fetch and return current weather data
 async function fetchCurrentWeather(req, res) {
     try {
         const location = req.query.location;
@@ -19,7 +21,7 @@ async function fetchCurrentWeather(req, res) {
             });
         }
 
-        // Format the response, ensuring no errors if `current` is missing
+        // Format current weather data
         const formattedData = {
             location: weatherData.location || "Unknown",
             country: weatherData.country || "Unknown",
@@ -41,7 +43,7 @@ async function fetchCurrentWeather(req, res) {
     }
 }
 
-// Fetch 10-Day Forecast Weather
+// Fetch 7-Day Forecast Weather
 async function fetchForecastWeather(req, res) {
     try {
         const location = req.query.location;
@@ -54,6 +56,7 @@ async function fetchForecastWeather(req, res) {
 
         const forecastData = await getForecastWeather(location);
 
+        // Format forecast weather data
         const formattedForecast = {
             location: forecastData.location || "Unknown",
             country: forecastData.country || "Unknown",
@@ -74,9 +77,6 @@ async function fetchForecastWeather(req, res) {
             console.error("Location data missing in API response:", forecastData);
         }
 
-        // Log the full API response to debug
-        console.log("Raw API Response:", forecastData);
-
         // Check if API response contains expected forecast data
         if (!forecastData || !forecastData.forecast || !Array.isArray(forecastData.forecast)) {
             console.error("Invalid forecast data:", forecastData);
@@ -94,7 +94,7 @@ async function fetchForecastWeather(req, res) {
     }
 }
 
-// Fetch Hourly Forecast Weather
+// Fetch Hourly Forecast Weather data
 async function fetchHourlyWeather(req, res) {
     try {
         const location = req.query.location;
