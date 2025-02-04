@@ -1,11 +1,10 @@
 const { getCurrentWeather, getForecastWeather } = require('../services/weatherstackService'); // Ensure correct service file
-const moment = require('moment-timezone');
+
 
 // Fetch and return current weather data
 async function fetchCurrentWeather(req, res) {
     try {
         const location = req.query.location;
-        const userTimezone = req.query.timezone || "UTC";
 
         if (!location) {
             return res.status(400).json({ error: 'Location query parameter is required.' });
@@ -22,8 +21,6 @@ async function fetchCurrentWeather(req, res) {
             });
         }
 
-        const timestamp = moment().tz(userTimezone).format("YYYY-MM-DD HH:mm:ss");
-
         // Format current weather data
         const formattedData = {
             location: weatherData.location || "Unknown",
@@ -35,7 +32,7 @@ async function fetchCurrentWeather(req, res) {
             wind: weatherData.windSpeed ? `${weatherData.windSpeed} mph` : "N/A",
             humidity: weatherData.humidity ? `${weatherData.humidity}%` : "N/A",
             precipitation: weatherData.precipitation ? `${weatherData.precipitation} in` : "N/A",
-            localtime: timestamp
+            localtime: weatherData.localtime ? `${weatherData.localtime}` : "N/A",
         };
 
         console.log("Formatted Current Weather Response:", formattedData);

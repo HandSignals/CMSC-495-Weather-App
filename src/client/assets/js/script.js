@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function fetchWeather(location) {
         try {
-            const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             const response = await fetch(`/api/weather/current?location=${encodeURIComponent(location)}`);
             const data = await response.json();
 
