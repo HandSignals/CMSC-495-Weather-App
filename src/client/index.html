@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAAND Weather App</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>SAAND Weather App</h1>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+    </nav>
+</header>
+
+<main>
+    <section id="search">
+        <input type="text" id="location" placeholder="Enter city name">
+        <button id="search-btn">Search</button>
+    </section>
+
+    <section id="weather-display">
+        <h2 id="location"></h2>
+        <img id="weather-icon" src="" alt="Weather Icon">
+        <p id="temperature"></p>
+        <p id="feels-like"></p>
+        <p id="condition"></p>
+        <p id="wind"></p>
+        <p id="humidity"></p>
+        <p id="precipitation"></p>
+    </section>
+
+    <section id="hourly-forecast">
+        <h2>Hourly Forecast</h2>
+        <div class="hourly-container"></div>
+        <button id="view-12-hour">View 12-Hour Forecast</button>
+    </section>
+
+    <section id="weekly-forecast">
+        <h2>3-Day Forecast</h2>
+        <div class="weekly-container"></div>
+        <button id="view-10-day">View 7-Day Forecast</button>
+    </section>
+</main>
+
+<footer>
+    <p>2025 SAAND Weather App</p>
+</footer>
+
+<script src="assets/js/script.js"></script>
+
+</body>
+</html>
+
+
+
+

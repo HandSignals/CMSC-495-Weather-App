@@ -1,0 +1,8 @@
+{
+  "location": "New York",
+  "temperature": "25°C",
+  "condition": "Sunny",
+  "wind_speed": "10 km/h",
+  "humidity": "50%",
+  "precipitation": "0 mm"
+}

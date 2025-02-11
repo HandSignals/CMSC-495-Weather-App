@@ -1,0 +1,201 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #333;
+    transition: background 0.5s ease-in-out;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+header nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #007BFF;
+}
+
+/* Main Content */
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+/* Search Bar */
+#search {
+    margin: 20px 0;
+}
+
+/* Weather Display */
+#weather-display {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Hourly Forecast - Keep Horizontal & Centered */
+.hourly-container {
+    display: flex;
+    justify-content: center; / Centers the items /
+    overflow-x: auto;
+    gap: 15px;
+    padding: 10px;
+    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    width: 100%; / Ensures it spans the available space /
+}
+
+.hourly-container::-webkit-scrollbar {
+    display: none; / Hides scrollbar for cleaner look (optional) /
+}
+
+/* Centering Forecast Items */
+.hourly-container > {
+    flex: 0 0 auto; /* Prevents items from stretching */
+}
+
+/* 3-Day and 7-Day Forecasts - Vertical Layout */
+.weekly-container, .full-weekly-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Forecast Items */
+.hourly-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    min-width: 120px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.weekly-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    width: 80%;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* Forecast Images */
+.hourly-item img, .weekly-item img {
+    width: 50px;
+    height: 50px;
+}
+
+/* Time & Date Styling */
+.hourly-time, .weekly-date {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Temperature Styling */
+.hourly-temp, .weekly-temp {
+    font-size: 14px;
+    font-weight: bold;
+    color: #007BFF;
+}
+
+/* Condition Styling */
+.hourly-condition, .weekly-condition {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Additional Details (For 3-Day & 7-Day Forecasts) */
+.weekly-details {
+    font-size: 14px;
+    color: #444;
+    margin-top: 5px;
+}
+
+/* View Forecast Buttons */
+#view-12-hour, #view-10-day {
+    display: block;
+    margin: 15px auto;
+    padding: 12px 20px;
+    font-size: 14px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+#view-12-hour:hover, #view-10-day:hover {
+    background-color: #0056b3;
+}
+
+/* About Page Content - Improves Readability */
+.about-content {
+    color: black;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 80%;
+    margin: 20px auto;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Contact Page Content - Matches About Page */
+.contact-content {
+    color: black;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 80%;
+    margin: 20px auto;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .weekly-container, .full-weekly-container {
+        width: 95%;
+    }
+
+    .weekly-item {
+        width: 95%;
+        margin: 10px auto;
+    }
+
+    #view-12-hour, #view-10-day {
+        width: 90%;
+    }
+
+    .about-content, .contact-content {
+        width: 90%;
+    }
+}
+
+
