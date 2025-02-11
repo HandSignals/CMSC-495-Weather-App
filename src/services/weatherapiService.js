@@ -21,6 +21,8 @@ async function getCurrentWeather(location) {
             },
         });
 
+        console.log("🌍 API Current Weather Response:", response.data);
+
         // Validate response structure
         if (!response.data || !response.data.current) {
             throw new Error("Invalid API response structure. Missing 'current' data.");
@@ -35,8 +37,9 @@ async function getCurrentWeather(location) {
             condition: response.data.current.condition.text,
             windSpeed: response.data.current.wind_mph,
             humidity: response.data.current.humidity,
-            precipitation: response.data.current.precip_mm !== undefined ? `${response.data.current.precip_in} ` : "0 in",
+            precipitation: response.data.current.precip_in !== undefined ? `${response.data.current.precip_in} ` : "0 in",
             icon: response.data.current.condition.icon,
+
         };
 
     } catch (error) {
@@ -45,18 +48,20 @@ async function getCurrentWeather(location) {
     }
 }
 
-// Fetch 7-Day forecast weather data
+// Fetch 10-Day forecast weather data
 async function getForecastWeather(location) {
     try {
         const response = await axios.get(`${WEATHERAPI_BASE_URL}/forecast.json`, {
             params: {
                 key: WEATHERAPI_KEY,
                 q: location,
-                days: 7, // Fetching a 7-day forecast
+                days: 10, // Fetching a 10-day forecast
                 aqi: "no",
                 alerts: "no"
             },
         });
+
+        console.log("🌍 API Forecast Weather Response:", response.data);
 
         // Validate response structure
         if (!response.data || !response.data.forecast || !Array.isArray(response.data.forecast.forecastday)) {

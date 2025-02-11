@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("wind").innerText = `Wind: ${data.wind}`;
         document.getElementById("humidity").innerText = `Humidity: ${data.humidity}`;
         document.getElementById("precipitation").innerText = `Precipitation: ${data.precipitation}`;
-        document.getElementById("weather-icon").src = `https:${data.icon}`;
+        document.getElementById("weather-icon").src = data.icon;
     }
 
     function updateHourlyForecast(hourlyData, hoursToShow) {
@@ -153,8 +153,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p class="weekly-condition">${day.condition}</p>
                 <p class="weekly-details">Feels Like: ${day.feelsLike || "N/A"}°F</p>
                 <p class="weekly-details">Wind: ${day.wind || "N/A"}</p>
-                <p class="weekly-details">Humidity: ${day.humidity || "N/A"}%</p>
-                <p class="weekly-details">Precipitation: ${day.precipitation || "N/A"} in</p>
+                <p class="weekly-details">Humidity: ${day.humidity || "N/A"}</p>
+                <p class="weekly-details">Precipitation: ${day.precipitation || "N/A"}</p>
             `;
             weeklyContainer.appendChild(dayElement);
         });
