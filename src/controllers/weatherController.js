@@ -1,4 +1,4 @@
-const { getCurrentWeather, getForecastWeather } = require('../services/weatherstackService'); // Ensure correct service file
+const { getCurrentWeather, getForecastWeather } = require('../services/weatherapiService'); // Ensure correct service file
 
 
 // Fetch and return current weather data

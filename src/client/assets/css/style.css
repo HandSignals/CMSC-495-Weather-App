@@ -64,7 +64,7 @@ main {
     flex: 0 0 auto; /* Prevents items from stretching */
 }
 
-/* 3-Day and 7-Day Forecasts - Vertical Layout */
+/* 3-Day and 10-Day Forecasts - Vertical Layout */
 .weekly-container, .full-weekly-container {
     display: flex;
     flex-direction: column;
