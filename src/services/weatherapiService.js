@@ -4,6 +4,9 @@ require('dotenv').config();
 const WEATHERAPI_BASE_URL = 'https://api.weatherapi.com/v1';
 const WEATHERAPI_KEY = process.env.WEATHERAPI_KEY;
 
+const epochTimeNow = Date.now();
+console.log(epochTimeNow);
+
 // Ensure API key is set; exit process if missing
 if (!WEATHERAPI_KEY) {
     console.error("⚠️ WEATHERAPI_KEY is missing! Check your .env file.");
