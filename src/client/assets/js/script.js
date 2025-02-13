@@ -130,8 +130,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const now = new Date();
         const currentHour = now.getHours();
 
-        // Ensure we only show the next 12 hours
-        const nextHours = hourlyData.slice(0, hoursToShow);
+        // Filter out past hours and get only upcoming hours
+        const nextHours = hourlyData.filter(hour => {
+            const hourTime = new Date(hour.time).getHours(); // Extract hour from API response
+            return hourTime >= currentHour; // Only include hours that are current or later
+        }).slice(0, hoursToShow); // Limit to `hoursToShow`
 
         nextHours.forEach(hour => {
             const hourElement = document.createElement("div");

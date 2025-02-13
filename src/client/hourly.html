@@ -61,7 +61,17 @@
                 return;
             }
 
-            data.hourly.slice(0, 12).forEach(hour => {
+            // Get current hour
+            const now = new Date();
+            const currentHour = now.getHours();
+
+            // Filter hourly forecast to only include upcoming hours
+            const nextHours = data.hourly.filter(hour => {
+                const hourTime = new Date(hour.time).getHours();
+                return hourTime >= currentHour; // Exclude past hours
+            }).slice(0, 12); // Show only the next 12 hours
+
+            nextHours.forEach(hour => {
                 const hourlyBlock = document.createElement("div");
                 hourlyBlock.classList.add("hourly-item");
 
@@ -74,6 +84,7 @@
 
                 hourlyContainer.appendChild(hourlyBlock);
             });
+
         } catch (error) {
             console.error("Error fetching hourly data:", error);
             alert("Failed to load hourly forecast.");
