@@ -43,13 +43,23 @@
             const response = await fetch(`/api/weather/hourly?location=${encodeURIComponent(location)}`);
             const data = await response.json();
 
-            document.getElementById("location-title").innerText = `12-Hour Forecast for ${data.location}, ${data.country}`;
+            // Ensure the response contains valid location information
+            const locationName = data.location || "Unknown";
+            const countryName = data.country || "Unknown";
+
+            document.getElementById("location-title").innerText = `12-Hour Forecast for ${locationName}, ${countryName}`;
 
             const hourlyContainer = document.querySelector(".hourly-container");
             hourlyContainer.innerHTML = "";
 
             // Set a fixed background for this page
-            document.body.style.backgroundImage = "url('assets/images/decorations/trees.png')";
+            document.body.style.backgroundImage = "url('assets/images/decorations/tree.png')";
+
+            // Ensure hourly forecast data exists
+            if (!data.hourly || data.hourly.length === 0) {
+                hourlyContainer.innerHTML = `<p>No hourly forecast available.</p>`;
+                return;
+            }
 
             data.hourly.slice(0, 12).forEach(hour => {
                 const hourlyBlock = document.createElement("div");

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10-Day Forecast</title>
+    <title>7-Day Forecast</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -43,20 +43,32 @@
             const response = await fetch(`/api/weather/forecast?location=${encodeURIComponent(location)}`);
             const data = await response.json();
 
-            document.getElementById("location-title").innerText = `10-Day Forecast for ${data.location}, ${data.country}`;
+            // Ensure location & country have fallback values
+            const locationName = data.location || "Unknown";
+            const countryName = data.country || "Unknown";
+
+            // Fix the forecast title to show the correct location
+            document.getElementById("location-title").innerText = `7-Day Forecast for ${locationName}, ${countryName}`;
 
             const weeklyContainer = document.querySelector(".weekly-container");
             weeklyContainer.innerHTML = "";
 
-            // Set a fixed background for this page
+            // Set the background for the weekly page
             document.body.style.backgroundImage = "url('assets/images/decorations/mountains.png')";
 
-            data.forecast.slice(0, 10).forEach(day => {
+            // Ensure forecast data exists before trying to display it
+            if (!data.forecast || data.forecast.length === 0) {
+                weeklyContainer.innerHTML = `<p>No weekly forecast available.</p>`;
+                return;
+            }
+
+            // Limit forecast to 7 days instead of 10
+            data.forecast.slice(0, 7).forEach(day => {
                 const dayBlock = document.createElement("div");
                 dayBlock.classList.add("weekly-item");
 
                 dayBlock.innerHTML = `
-                    <p>${day.date}</p>
+                    <p>${day.day}</p>
                     <img src="https:${day.icon}" alt="${day.condition}">
                     <p>H: ${day.maxTemp}°F / L: ${day.minTemp}°F</p>
                     <p>${day.condition}</p>

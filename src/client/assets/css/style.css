@@ -178,6 +178,23 @@ main {
     font-weight: bold;
 }
 
+/* Home Button */
+.home-button {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 20px;
+    font-size: 18px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.home-button:hover {
+    background-color: #0056b3;
+}
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     .weekly-container, .full-weekly-container {

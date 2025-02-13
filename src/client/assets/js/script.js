@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Check which page is loaded and set appropriate fixed background
     let page = window.location.pathname.split("/").pop();
     if (page === "hourly.html") {
-        document.body.style.backgroundImage = "url('assets/images/decorations/trees.png')";
+        document.body.style.backgroundImage = "url('assets/images/decorations/tree.png')";
     } else if (page === "weekly.html") {
         document.body.style.backgroundImage = "url('assets/images/decorations/mountains.png')";
     } else if (page === "contact.html") {
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.style.backgroundImage = "url('assets/images/backgrounds/about-bg.jpg')";
     }
 
-    searchBtn.addEventListener("click", function () {
+    searchBtn.addEventListener("click", async function () {
         const location = locationInput.value.trim();
         if (!location) {
             alert("Please enter a city name!");
@@ -26,9 +26,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
         localStorage.setItem("lastSearchedLocation", location);
 
-        fetchWeather(location);
-        fetchHourlyForecast(location, 6);  // Show next 6 hours on homepage
-        fetchWeeklyForecast(location, 3);  // Show next 3 days on homepage
+        try {
+            const weatherResponse = await fetch(`/api/weather/current?location=${encodeURIComponent(location)}`);
+            const weatherData = await weatherResponse.json();
+
+            if (!weatherResponse.ok || weatherData.error) {
+                throw new Error("Invalid location, no forecast data.");
+            }
+
+            fetchWeather(location);
+            fetchHourlyForecast(location, 6);  // Show next 6 hours on homepage
+            fetchWeeklyForecast(location, 3);  // Show next 3 days on homepage
+        } catch (error) {
+            alert(error.message); // Show single error message
+        }
     });
 
     function getStoredLocation() {
@@ -43,6 +54,9 @@ document.addEventListener("DOMContentLoaded", function () {
             if (response.ok) {
                 updateWeatherDisplay(data);
                 setBackgroundBasedOnWeather(data.condition);
+
+                // Update searched location at the top of the page
+                document.getElementById("searched-location").innerText = `Weather for ${data.location}, ${data.country}`;
             } else {
                 alert(data.error || "Failed to fetch weather data.");
             }
@@ -57,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const response = await fetch(`/api/weather/hourly?location=${encodeURIComponent(location)}`);
             const data = await response.json();
 
-            console.log("✅ Hourly Forecast Response:", data);
+            console.log("Hourly Forecast Response:", data);
 
             if (response.ok) {
                 updateHourlyForecast(data.hourly, hoursToShow);
@@ -147,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const dayElement = document.createElement("div");
             dayElement.classList.add("weekly-item");
             dayElement.innerHTML = `
-                <p class="weekly-date">${day.date}</p>
+                <p class="weekly-date">${day.day || day.date || "Date Unavailable"}</p>
                 <img src="https:${day.icon}" alt="${day.condition}">
                 <p class="weekly-temp">H: ${day.maxTemp}°F / L: ${day.minTemp}°F</p>
                 <p class="weekly-condition">${day.condition}</p>
@@ -202,5 +216,15 @@ document.addEventListener("DOMContentLoaded", function () {
         fetchWeather(storedLocation);
         fetchHourlyForecast(storedLocation, 6);
         fetchWeeklyForecast(storedLocation, 3);
+
+        // Only update the location display if the element exists
+        const searchedLocationElement = document.getElementById("searched-location");
+        if (searchedLocationElement) {
+            searchedLocationElement.innerText = `Weather for ${storedLocation}`;
+        }
     }
 });
+
+
+
+
