@@ -47,7 +47,9 @@
             const locationName = data.location || "Unknown";
             const countryName = data.country || "Unknown";
 
-            document.getElementById("location-title").innerText = `12-Hour Forecast for ${locationName}, ${countryName}`;
+            const stateName = data.state && data.state !== "Unknown" ? `, ${data.state}` : "";
+            document.getElementById("location-title").innerText =
+                `12-Hour Forecast for ${locationName}${stateName}, ${countryName}`;
 
             const hourlyContainer = document.querySelector(".hourly-container");
             hourlyContainer.innerHTML = "";

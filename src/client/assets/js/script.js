@@ -55,8 +55,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 updateWeatherDisplay(data);
                 setBackgroundBasedOnWeather(data.condition);
 
-                // Update searched location at the top of the page
-                document.getElementById("searched-location").innerText = `Weather for ${data.location}, ${data.country}`;
+                // ✅ Update location display with city, state, and country
+                document.getElementById("searched-location").innerText =
+                    `Weather for ${data.location}, ${data.state}, ${data.country}`;
             } else {
                 alert(data.error || "Failed to fetch weather data.");
             }
@@ -113,14 +114,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updateWeatherDisplay(data) {
-        document.getElementById("location").innerText = `${data.location}, ${data.country}`;
+        document.getElementById("location").innerText =
+            `${data.location}, ${data.state}, ${data.country}`;  // ✅ Now includes state
+
         document.getElementById("temperature").innerText = `${data.temperature}°F`;
         document.getElementById("feels-like").innerText = `Feels Like: ${data.feelsLike}°F`;
         document.getElementById("condition").innerText = data.condition;
         document.getElementById("wind").innerText = `Wind: ${data.wind}`;
         document.getElementById("humidity").innerText = `Humidity: ${data.humidity}`;
-        document.getElementById("precipitation").innerText = `Precipitation: ${data.precipitation}`;
+
+        const precipitationValue = (!data.precipitation || data.precipitation === "N/A") ? "0.0 in" :
+            (data.precipitation.includes("in") ? data.precipitation : `${data.precipitation} in`);
+        document.getElementById("precipitation").innerText = `Precipitation: ${precipitationValue}`;
+
         document.getElementById("weather-icon").src = data.icon;
+        document.getElementById("weather-icon").alt = data.condition || "Weather Icon";
     }
 
     function updateHourlyForecast(hourlyData, hoursToShow) {
@@ -171,7 +179,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p class="weekly-details">Feels Like: ${day.feelsLike || "N/A"}°F</p>
                 <p class="weekly-details">Wind: ${day.wind || "N/A"}</p>
                 <p class="weekly-details">Humidity: ${day.humidity || "N/A"}</p>
-                <p class="weekly-details">Precipitation: ${day.precipitation || "N/A"}</p>
+                <p class="weekly-details">Precipitation: ${day.precipitation && day.precipitation !== "N/A" ?
+                (day.precipitation.includes("in") ? day.precipitation : `${day.precipitation} in`) : "0.0 in"}</p>
             `;
             weeklyContainer.appendChild(dayElement);
         });

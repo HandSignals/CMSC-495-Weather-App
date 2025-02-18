@@ -18,6 +18,7 @@ async function fetchCurrentWeather(req, res) {
 
         const formattedData = {
             location: weatherData.location || "Unknown",
+            state: weatherData.state || "Unknown",  // ✅ Include state
             country: weatherData.country || "Unknown",
             temperature: weatherData.temperature ?? "N/A",
             feelsLike: weatherData.feelsLike ?? "N/A",
@@ -51,8 +52,9 @@ async function fetchForecastWeather(req, res) {
 
         // Format forecast weather data
         const formattedForecast = {
-            location: forecastData.location || "Unknown",  // Fix: Correct location access
-            country: forecastData.country || "Unknown",   // Fix: Correct country access
+            location: forecastData.location || "Unknown",
+            state: forecastData.state || "Unknown",  // ✅ Include state
+            country: forecastData.country || "Unknown",
             forecast: forecastData.forecast.map(day => ({
                 day: day.date,
                 maxTemp: day.maxTemp ?? "N/A",
@@ -64,7 +66,7 @@ async function fetchForecastWeather(req, res) {
                 humidity: day.humidity ?? "N/A",
                 precipitation: day.precipitation ?? "N/A"
             }))
-        }
+        };
 
         if (formattedForecast.location === "Unknown" || formattedForecast.country === "Unknown") {
             console.error("Location data missing in API response:", forecastData);
@@ -98,11 +100,11 @@ async function fetchHourlyWeather(req, res) {
             return res.status(500).json({ error: "No forecast data available." });
         }
 
-        // ✅ Debugging log
-        console.log("Extracted Location Data:", forecastData.location, forecastData.country);
+        console.log("Extracted Location Data:", forecastData.location, forecastData.state, forecastData.country);
 
         res.json({
             location: forecastData.location || "Unknown",
+            state: forecastData.state || null,  // ✅ Ensure state is included (null if missing)
             country: forecastData.country || "Unknown",
             hourly: forecastData.forecast[0]?.hourly || []
         });

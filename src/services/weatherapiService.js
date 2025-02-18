@@ -26,6 +26,7 @@ async function getCurrentWeather(location) {
 
         return {
             location: response.data.location.name,
+            state: response.data.location.region,  // ✅ Extract the state/region
             country: response.data.location.country,
             temperature: response.data.current.temp_f,
             feelsLike: response.data.current.feelslike_f,
@@ -82,8 +83,9 @@ async function getForecastWeather(location) {
         }));
 
         return {
-            location: response.data.location.name, // Ensure this exists in response
-            country: response.data.location.country, // Ensure this exists in response
+            location: response.data.location.name,
+            state: response.data.location.region,  // ✅ Extract the state/region
+            country: response.data.location.country,
             forecast,
         };
     } catch (error) {

@@ -48,7 +48,8 @@
             const countryName = data.country || "Unknown";
 
             // Fix the forecast title to show the correct location
-            document.getElementById("location-title").innerText = `7-Day Forecast for ${locationName}, ${countryName}`;
+            document.getElementById("location-title").innerText =
+                `7-Day Forecast for ${locationName}, ${data.state}, ${countryName}`;
 
             const weeklyContainer = document.querySelector(".weekly-container");
             weeklyContainer.innerHTML = "";
