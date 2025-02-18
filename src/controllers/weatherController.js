@@ -18,7 +18,7 @@ async function fetchCurrentWeather(req, res) {
 
         const formattedData = {
             location: weatherData.location || "Unknown",
-            state: weatherData.state || "Unknown",  // ✅ Include state
+            state: weatherData.state || "Unknown",  // Include state
             country: weatherData.country || "Unknown",
             temperature: weatherData.temperature ?? "N/A",
             feelsLike: weatherData.feelsLike ?? "N/A",
@@ -53,7 +53,7 @@ async function fetchForecastWeather(req, res) {
         // Format forecast weather data
         const formattedForecast = {
             location: forecastData.location || "Unknown",
-            state: forecastData.state || "Unknown",  // ✅ Include state
+            state: forecastData.state || "Unknown",  // Include state
             country: forecastData.country || "Unknown",
             forecast: forecastData.forecast.map(day => ({
                 day: day.date,
@@ -104,7 +104,7 @@ async function fetchHourlyWeather(req, res) {
 
         res.json({
             location: forecastData.location || "Unknown",
-            state: forecastData.state || null,  // ✅ Ensure state is included (null if missing)
+            state: forecastData.state || null,  // Ensure state is included (null if missing)
             country: forecastData.country || "Unknown",
             hourly: forecastData.forecast[0]?.hourly || []
         });
@@ -114,8 +114,28 @@ async function fetchHourlyWeather(req, res) {
     }
 }
 
-// Export the functions
-module.exports = { fetchCurrentWeather, fetchForecastWeather, fetchHourlyWeather };
+const { getLocationAutocomplete } = require("../services/weatherapiService");
 
+async function fetchLocationAutocomplete(req, res) {
+    try {
+        const query = req.query.query;
+        if (!query) {
+            return res.status(400).json({ error: "Query parameter is required." });
+        }
 
+        const suggestions = await getLocationAutocomplete(query);
+
+        if (!suggestions || suggestions.length === 0) {
+            return res.status(404).json({ error: "No locations found." });
+        }
+
+        res.json(suggestions);
+    } catch (error) {
+        console.error("Error fetching autocomplete locations:", error.message);
+        res.status(500).json({ error: "Unable to fetch location suggestions." });
+    }
+}
+
+// Add this function to the exports
+module.exports = { fetchCurrentWeather, fetchForecastWeather, fetchHourlyWeather, fetchLocationAutocomplete };
 

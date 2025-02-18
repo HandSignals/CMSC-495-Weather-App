@@ -26,7 +26,7 @@ async function getCurrentWeather(location) {
 
         return {
             location: response.data.location.name,
-            state: response.data.location.region,  // ✅ Extract the state/region
+            state: response.data.location.region,  // Extract the state/region
             country: response.data.location.country,
             temperature: response.data.current.temp_f,
             feelsLike: response.data.current.feelslike_f,
@@ -84,7 +84,7 @@ async function getForecastWeather(location) {
 
         return {
             location: response.data.location.name,
-            state: response.data.location.region,  // ✅ Extract the state/region
+            state: response.data.location.region,  // Extract the state/region
             country: response.data.location.country,
             forecast,
         };
@@ -94,8 +94,31 @@ async function getForecastWeather(location) {
     }
 }
 
-// Export weather functions for use elsewhere
-module.exports = { getCurrentWeather, getForecastWeather };
+async function getLocationAutocomplete(query) {
+    try {
+        const response = await axios.get(`${WEATHERAPI_BASE_URL}/search.json`, {
+            params: { key: WEATHERAPI_KEY, q: query },
+        });
+
+        if (!response.data || response.data.length === 0) {
+            return [];
+        }
+
+        return response.data.map(location => ({
+            name: location.name,
+            region: location.region, // State
+            country: location.country
+        }));
+    } catch (error) {
+        console.error("Error fetching location autocomplete:", error.message);
+        return [];
+    }
+}
+
+// Add this function to the exports
+module.exports = { getCurrentWeather, getForecastWeather, getLocationAutocomplete };
+
+
 
 
 

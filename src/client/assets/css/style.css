@@ -215,4 +215,40 @@ main {
     }
 }
 
+/* Fix the width of autocomplete dropdown */
+#autocomplete-list {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    z-index: 1000;
+    width: 300px; /* Set a fixed width */
+    left: 50%; /* Center it */
+    transform: translateX(-50%); /* Ensure it's centered */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    border-radius: 5px; /* Rounded edges */
+
+    max-height: none; /* Removes height restriction */
+    overflow: visible; /* Ensures all items are visible */
+}
+
+/* Style individual autocomplete items */
+.autocomplete-item {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    text-align: left; /* Align text for better readability */
+    font-size: 14px;
+}
+
+/* Remove border from last item */
+.autocomplete-item:last-child {
+    border-bottom: none;
+}
+
+/* Add hover effect */
+.autocomplete-item:hover {
+    background-color: #f1f1f1;
+}
+
 

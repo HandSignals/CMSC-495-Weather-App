@@ -17,6 +17,51 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.style.backgroundImage = "url('assets/images/backgrounds/about-bg.jpg')";
     }
 
+    // Fetch location suggestions as user types
+    async function fetchLocationSuggestions(query) {
+        if (query.length < 2) { // Only search when user types 2+ characters
+            document.getElementById("autocomplete-list").innerHTML = "";
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/weather/autocomplete?query=${encodeURIComponent(query)}`);
+            const data = await response.json();
+
+            if (!response.ok || data.error) {
+                throw new Error("Error fetching location suggestions");
+            }
+
+            displaySuggestions(data);
+        } catch (error) {
+            console.error("Error fetching location suggestions:", error);
+        }
+    }
+
+    // Display location suggestions in the dropdown
+    function displaySuggestions(suggestions) {
+        const listContainer = document.getElementById("autocomplete-list");
+        listContainer.innerHTML = ""; // Clear previous suggestions
+
+        suggestions.forEach(location => {
+            const suggestionItem = document.createElement("div");
+            suggestionItem.classList.add("autocomplete-item");
+            suggestionItem.innerText = `${location.name}, ${location.region}, ${location.country}`;
+
+            suggestionItem.addEventListener("click", function () {
+                document.getElementById("location").value = `${location.name}, ${location.region}, ${location.country}`;
+                listContainer.innerHTML = ""; // Hide suggestions after selection
+            });
+
+            listContainer.appendChild(suggestionItem);
+        });
+    }
+
+    // Listen for input changes in search bar
+    document.getElementById("location").addEventListener("input", function () {
+        fetchLocationSuggestions(this.value);
+    });
+
     searchBtn.addEventListener("click", async function () {
         const location = locationInput.value.trim();
         if (!location) {
@@ -55,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 updateWeatherDisplay(data);
                 setBackgroundBasedOnWeather(data.condition);
 
-                // ✅ Update location display with city, state, and country
+                // Update location display with city, state, and country
                 document.getElementById("searched-location").innerText =
                     `Weather for ${data.location}, ${data.state}, ${data.country}`;
             } else {
@@ -115,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updateWeatherDisplay(data) {
         document.getElementById("location").innerText =
-            `${data.location}, ${data.state}, ${data.country}`;  // ✅ Now includes state
+            `${data.location}, ${data.state}, ${data.country}`;  // Now includes state
 
         document.getElementById("temperature").innerText = `${data.temperature}°F`;
         document.getElementById("feels-like").innerText = `Feels Like: ${data.feelsLike}°F`;
