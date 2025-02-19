@@ -79,9 +79,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 throw new Error("Invalid location, no forecast data.");
             }
 
-            fetchWeather(location);
-            fetchHourlyForecast(location, 6);  // Show next 6 hours on homepage
-            fetchWeeklyForecast(location, 3);  // Show next 3 days on homepage
+            await fetchWeather(location);
+            await fetchHourlyForecast(location, 6);  // Show next 6 hours on homepage
+            await fetchWeeklyForecast(location, 3);  // Show next 3 days on homepage
         } catch (error) {
             alert(error.message); // Show single error message
         }
@@ -183,11 +183,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const now = new Date();
         const currentHour = now.getHours();
 
-        // Filter out past hours and get only upcoming hours
+        // Ensure filtering doesn't accidentally exclude all hours
         const nextHours = hourlyData.filter(hour => {
-            const hourTime = new Date(hour.time).getHours(); // Extract hour from API response
-            return hourTime >= currentHour; // Only include hours that are current or later
+            const hourTime = new Date(hour.time).getHours();
+            return hourTime >= currentHour;
         }).slice(0, hoursToShow); // Limit to `hoursToShow`
+
+        if (nextHours.length === 0) {
+            console.warn("No upcoming hourly data found; displaying first available hours.");
+            nextHours.push(...hourlyData.slice(0, hoursToShow)); // Fallback: Show first 6 hours
+        }
 
         nextHours.forEach(hour => {
             const hourElement = document.createElement("div");

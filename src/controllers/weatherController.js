@@ -89,7 +89,6 @@ async function fetchForecastWeather(req, res) {
 async function fetchHourlyWeather(req, res) {
     try {
         const location = req.query.location;
-
         if (!location) {
             return res.status(400).json({ error: 'Location query parameter is required.' });
         }
@@ -102,11 +101,14 @@ async function fetchHourlyWeather(req, res) {
 
         console.log("Extracted Location Data:", forecastData.location, forecastData.state, forecastData.country);
 
+        // Extract hourly forecast for the next available hours
+        const hourlyForecast = forecastData.forecast.flatMap(day => day.hourly).slice(0, 12); // Extract 12 hours
+
         res.json({
             location: forecastData.location || "Unknown",
-            state: forecastData.state || null,  // Ensure state is included (null if missing)
+            state: forecastData.state || null,
             country: forecastData.country || "Unknown",
-            hourly: forecastData.forecast[0]?.hourly || []
+            hourly: hourlyForecast
         });
     } catch (error) {
         console.error('Error in fetchHourlyWeather:', error.message);

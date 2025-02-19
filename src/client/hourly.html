@@ -43,7 +43,6 @@
             const response = await fetch(`/api/weather/hourly?location=${encodeURIComponent(location)}`);
             const data = await response.json();
 
-            // Ensure the response contains valid location information
             const locationName = data.location || "Unknown";
             const countryName = data.country || "Unknown";
 
@@ -54,35 +53,24 @@
             const hourlyContainer = document.querySelector(".hourly-container");
             hourlyContainer.innerHTML = "";
 
-            // Set a fixed background for this page
-            document.body.style.backgroundImage = "url('assets/images/decorations/tree.png')";
-
-            // Ensure hourly forecast data exists
             if (!data.hourly || data.hourly.length === 0) {
                 hourlyContainer.innerHTML = `<p>No hourly forecast available.</p>`;
                 return;
             }
 
-            // Get current hour
-            const now = new Date();
-            const currentHour = now.getHours();
-
-            // Filter hourly forecast to only include upcoming hours
-            const nextHours = data.hourly.filter(hour => {
-                const hourTime = new Date(hour.time).getHours();
-                return hourTime >= currentHour; // Exclude past hours
-            }).slice(0, 12); // Show only the next 12 hours
+            // Ensure next 12 hours are always displayed
+            const nextHours = data.hourly.slice(0, 12);
 
             nextHours.forEach(hour => {
                 const hourlyBlock = document.createElement("div");
                 hourlyBlock.classList.add("hourly-item");
 
                 hourlyBlock.innerHTML = `
-                    <p>${new Date(hour.time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</p>
-                    <img src="https:${hour.icon}" alt="${hour.condition}">
-                    <p>${hour.temp}°F</p>
-                    <p>${hour.condition}</p>
-                `;
+                <p>${new Date(hour.time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</p>
+                <img src="https:${hour.icon}" alt="${hour.condition}">
+                <p>${hour.temp}°F</p>
+                <p>${hour.condition}</p>
+            `;
 
                 hourlyContainer.appendChild(hourlyBlock);
             });
@@ -92,6 +80,7 @@
             alert("Failed to load hourly forecast.");
         }
     });
+
 </script>
 
 </body>
