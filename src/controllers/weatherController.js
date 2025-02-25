@@ -138,6 +138,4 @@ async function fetchLocationAutocomplete(req, res) {
     }
 }
 
-// Add this function to the exports
 module.exports = { fetchCurrentWeather, fetchForecastWeather, fetchHourlyWeather, fetchLocationAutocomplete };
-

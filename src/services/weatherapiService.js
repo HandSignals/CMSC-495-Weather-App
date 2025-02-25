@@ -54,7 +54,7 @@ async function getForecastWeather(location) {
             },
         });
 
-        console.log("API Forecast Weather Response:", JSON.stringify(response.data, null, 2)); // <-- Log full response
+        console.log("API Forecast Weather Response:", JSON.stringify(response.data, null, 2)); // Log full response
 
         if (!response.data || !response.data.location || !response.data.forecast || !Array.isArray(response.data.forecast.forecastday)) {
             console.error("Invalid response structure from WeatherAPI:", response.data);
@@ -115,10 +115,4 @@ async function getLocationAutocomplete(query) {
     }
 }
 
-// Add this function to the exports
 module.exports = { getCurrentWeather, getForecastWeather, getLocationAutocomplete };
-
-
-
-
-

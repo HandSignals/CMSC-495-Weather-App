@@ -8,7 +8,3 @@ router.get('/hourly', fetchHourlyWeather);
 router.get('/autocomplete', fetchLocationAutocomplete);  // Fixed import issue
 
 module.exports = router;
-
-
-
-
