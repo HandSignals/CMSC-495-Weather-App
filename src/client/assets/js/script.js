@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
             suggestionItem.innerText = `${location.name}, ${location.region}, ${location.country}`;
 
             suggestionItem.addEventListener("click", function () {
-                document.getElementById("location").value = `${location.name}, ${location.region}, ${location.country}`;
+                document.getElementById("location-title").value = `${location.name}, ${location.region}, ${location.country}`;
                 listContainer.innerHTML = ""; // Hide suggestions after selection
             });
 
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updateWeatherDisplay(data) {
-        document.getElementById("location").innerText =
+        document.getElementById("location-title").innerText =
             `${data.location}, ${data.state}, ${data.country}`;  // Now includes state
 
         document.getElementById("temperature").innerText = `${data.temperature}°F`;
@@ -286,7 +286,3 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 });
-
-
-
-
